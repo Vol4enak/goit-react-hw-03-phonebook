@@ -34,16 +34,6 @@ export class App extends Component {
     }));
   };
 
-  filterByName = data => {
-    this.setState({ filter: data });
-  };
-  visibleContact = () => {
-    const normalaizedfilter = this.state.filter.toLocaleLowerCase();
-    return this.state.contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(normalaizedfilter)
-    );
-  };
-
   componentDidMount(prevProps, prevState) {
     const contact = localStorage.getItem('contacts');
     const parsetCont = JSON.parse(contact);
@@ -55,9 +45,18 @@ export class App extends Component {
     }
   };
 
-  render() {
-    const visibility = this.visibleContact();
+  filterByName = data => {
+    this.setState({ filter: data });
+  };
+  visibleContact = () => {
+    const normalaizedfilter = this.state.filter.toLocaleLowerCase();
+    console.log(normalaizedfilter);
+    return this.state.contacts.filter(contact =>
+      contact.name.toLocaleLowerCase().includes(normalaizedfilter)
+    );
+  };
 
+  render() {
     return (
       <Container>
         <h1>Phonebook</h1>
@@ -70,7 +69,10 @@ export class App extends Component {
 
         <Filter onChange={this.filterByName} />
 
-        <ContactList items={visibility} onDeleteContact={this.deleteContact} />
+        <ContactList
+          items={this.visibleContact()}
+          onDeleteContact={this.deleteContact}
+        />
       </Container>
     );
   }
