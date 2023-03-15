@@ -69,10 +69,12 @@ export class App extends Component {
 
         <Filter onChange={this.filterByName} />
 
-        <ContactList
-          items={this.visibleContact()}
-          onDeleteContact={this.deleteContact}
-        />
+        {this.state.contacts ? (
+          <ContactList
+            items={this.visibleContact()}
+            onDeleteContact={this.deleteContact}
+          />
+        ) : null}
       </Container>
     );
   }
